@@ -1,4 +1,4 @@
-import {Container,Title, SubTitle} from './PhoneBook/PhoneBook.styled.js'
+import {Container,Title, SubTitle} from '../components/PhoneBook/PhoneBook.styled'
 import ContactForm from './PhoneBook/ContactForm';
 import Filter from './PhoneBook/Filter/Filter';
 import ContactList from './PhoneBook/ContactList';
