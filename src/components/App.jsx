@@ -1,9 +1,9 @@
-import css from '../components/PhoneBook/phoneBook.module.css';
+import { Container, Title, SubTitle } from './PhoneBook/PhoneBook.styled.js';
 import ContactForm from './PhoneBook/ContactForm';
 import Filter from './PhoneBook/Filter/Filter';
 import ContactList from './PhoneBook/ContactList';
 import React, { Component } from 'react';
-import { Button } from './PhoneBook/styled';
+import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
@@ -16,32 +16,63 @@ export class App extends Component {
     filter: '',
   };
 
-  formSubmitHandler = data => {
-    console.log(data);
+  addContact = ({ name, number }) => {
+    const Contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
 
-    this.setState(prevState => {
-      return {
-        contacts: [(prevState = data)],
-      };
-    });
+    if (
+      this.state.contacts.some(
+        contact => contact.name.toLowerCase() === Contact.name.toLowerCase()
+      )
+    ) {
+      return alert(`${Contact.name} is already in contacts.`);
+    }
+
+    this.setState(prevState => ({
+      contacts: [Contact, ...prevState.contacts],
+    }));
   };
 
-  handleRemoveEl = () => {
-    console.log('remove');
+  changeFilter = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
+
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
+
+  formSubmitHandler = data => {
+    console.log(data);
+  };
+
+  deleteContacts = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
 
   render() {
-    return (
-      <div className={css.contactsForm}>
-        <ContactForm onSubmit={this.formSubmitHandler} />
-        {/* <Button /> */}
-        <Filter />
+    const visibleContacts = this.getVisibleContacts();
 
+    return (
+      <Container>
+        <Title>Phonebook </Title>
+        <ContactForm onSubmit={this.addContact} />
+        <SubTitle>Contacts</SubTitle>
+        <Filter onChange={this.changeFilter} />
         <ContactList
-          contacts={this.state.contacts}
-          onRemove={this.handleRemoveEl}
+          contacts={visibleContacts}
+          onDeleteContact={this.deleteContacts}
         />
-      </div>
+      </Container>
     );
   }
 }

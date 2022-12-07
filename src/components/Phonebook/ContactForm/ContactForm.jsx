@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-// import shortId from 'shortid'
-import { nanoid } from 'nanoid'
-
+import { nanoid } from 'nanoid';
+import { Label, Input, Submit } from '../PhoneBook.styled.js';
 
 class ContactFrom extends Component {
   state = {
@@ -32,43 +32,46 @@ class ContactFrom extends Component {
   };
 
   render() {
+    const { name, number } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
-        <h2>Phonebook</h2>
-        <label htmlFor="name">
+        <Label htmlFor={nanoid()}>
           Name
-          <input
+          <Input
             onChange={this.handleChange}
             type="text"
             name="name"
-            value={this.state.name}
+            value={name}
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required
-            // id={shortId.generate()}
             id={nanoid()}
           />
-        </label>
-        <label htmlFor="number">
+        </Label>
+        <Label htmlFor={nanoid()}>
           Number
-          <input
+          <Input
             onChange={this.handleChange}
             type="tel"
             name="number"
-            value={this.state.number}
+            value={number}
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             required
             id={nanoid()}
           />
-        </label>
-        <button type="submit">Add contact</button>
+        </Label>
+        <Submit type="submit">Add contact</Submit>
       </form>
     );
   }
 }
 
 export default ContactFrom;
+
+ContactFrom.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 // set event-target
 

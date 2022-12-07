@@ -1,23 +1,30 @@
-import css from '../phoneBook.module.css';
-const ContactList = ({ contacts, onRemove }) => {
-  // console.log(contacts);
+import PropTypes from 'prop-types';
+import { List, Contact, Number, ContactBtn, Name } from './ContactList.styled';
+const ContactList = ({ contacts, onDeleteContact }) => {
   return (
-    <ul className={css.contactsList}>
-      {contacts.map(contact => (
-        <li className={css.contactsItem} key={contact.id}>
-          <p className={css.contactsName}>{contact.name}:</p>
-          <span className={css.contactsNumber}>{contact.number}</span>
-          <button
-            onClick={() => onRemove()}
-            className={css.contactsBtn}
-            type="button"
-          >
+    <List>
+      {contacts.map(({ id, name, number }) => (
+        <Contact key={id}>
+          <Name>{name}:</Name>
+          <Number>{number}</Number>
+          <ContactBtn onClick={() => onDeleteContact(id)} type="button">
             Delete
-          </button>
-        </li>
+          </ContactBtn>
+        </Contact>
       ))}
-    </ul>
+    </List>
   );
 };
 
 export default ContactList;
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    }).isRequired
+  ),
+  onDeleteContact: PropTypes.func,
+};

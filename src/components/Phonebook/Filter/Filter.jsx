@@ -1,17 +1,24 @@
-const Filter = () => {
+import PropTypes from 'prop-types';
+import { WrapFilter,Input } from '../PhoneBook.styled';
+
+const Filter = ({ onChange }) => {
   return (
-    <div className="filter">
-      <h2>Contacts</h2>
+    <WrapFilter>
       <p>Find contacts by name</p>
-      <input
+      <Input
         type="text"
         name="filter"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
+        onChange={onChange}
       />
-    </div>
+    </WrapFilter>
   );
 };
 
 export default Filter;
+
+Filter.propTypes = {
+  onChange: PropTypes.func.isRequired,
+}
