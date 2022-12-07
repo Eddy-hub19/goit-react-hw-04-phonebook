@@ -1,4 +1,4 @@
-import {Container,Title, SubTitle} from './App.styled'
+import { Container, Title, SubTitle } from './App.styled';
 import Filter from './PhoneBook/Filter/Filter';
 import ContactList from './PhoneBook/ContactList';
 import React, { Component } from 'react';
@@ -60,6 +60,7 @@ export class App extends Component {
   };
 
   render() {
+    const { filter } = this.state;
     const visibleContacts = this.getVisibleContacts();
 
     return (
@@ -67,7 +68,7 @@ export class App extends Component {
         <Title>Phonebook</Title>
         <ContactForm onSubmit={this.addContact} />
         <SubTitle>Contacts</SubTitle>
-        <Filter onChange={this.changeFilter} />
+        <Filter value={filter} onChange={this.changeFilter} />
         <ContactList
           contacts={visibleContacts}
           onDeleteContact={this.deleteContacts}
