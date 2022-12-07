@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { Label, Input, Submit } from '../PhoneBook.styled.js';
+import { Label, Input, Submit } from '../App.styled';
 
-class ContactFrom extends Component {
+class ContactForm extends Component {
   state = {
     name: '',
     number: '',
@@ -67,17 +67,8 @@ class ContactFrom extends Component {
   }
 }
 
-export default ContactFrom;
+export default ContactForm;
 
-ContactFrom.propTypes = {
+ContactForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
-
-// set event-target
-
-// handleChangeName = e => {
-//   this.setState({ name: e.target.value });
-// };
-// handleChangeNumber = e => {
-//   this.setState({ number: e.target.value });
-// }

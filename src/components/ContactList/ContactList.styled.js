@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 // ContactList
 
+// List, Contact, Number, ContactBtn, Name
+
 export const List = styled.ul`
   margin: 0 auto;
   padding: 0;
@@ -20,10 +22,6 @@ export const Contact = styled.li`
     transition: background 1.3s ease;
     color: white;
   }
-`;
-
-export const Name = styled.p`
-  padding: 5px;
 `;
 
 export const Number = styled.span`
@@ -46,4 +44,8 @@ export const ContactBtn = styled.button`
     color: white;
     transition: background 1s ease;
   }
+`;
+
+export const Name = styled.p`
+  padding: 5px;
 `;

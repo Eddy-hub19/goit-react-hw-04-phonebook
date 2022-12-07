@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { WrapFilter, Input } from '../PhoneBook.styled';
+import { WrapFilter, Input } from '../App.styled.js';
 
 const Filter = ({ onChange, value }) => {
   return (
