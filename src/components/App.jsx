@@ -1,4 +1,4 @@
-import { Container, Title, SubTitle } from './PhoneBook/PhoneBook.styled.js';
+import { Container, Title, SubTitle } from './PhoneBook/PhoneBook.styled';
 import ContactForm from './PhoneBook/ContactForm';
 import Filter from './PhoneBook/Filter/Filter';
 import ContactList from './PhoneBook/ContactList';
@@ -64,7 +64,7 @@ export class App extends Component {
 
     return (
       <Container>
-        <Title>Phonebook </Title>
+        <Title>Phonebook</Title>
         <ContactForm onSubmit={this.addContact} />
         <SubTitle>Contacts</SubTitle>
         <Filter onChange={this.changeFilter} />
