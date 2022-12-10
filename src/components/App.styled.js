@@ -26,10 +26,16 @@ export const SubTitle = styled.h2`
 // ContactForm
 
 export const Submit = styled.button`
-  background: #009688;
-  color: white;
+  color: aliceblue;
   padding: 6px;
   cursor: pointer;
+  background: cadetblue;
+  :hover {
+    color: white;
+    background: #009688;
+    box-shadow: 0px 0px 19px 1px grey;
+    transition: box-shadow 1s ease;
+  }
 `;
 
 export const Label = styled.label`
