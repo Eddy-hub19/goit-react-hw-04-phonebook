@@ -1,4 +1,8 @@
+const { useState } = require("react");
+
+
 const App = () => {
-  const [state, setstate] = useState(initialState);
+  // const [contacts, setContacts] = useState(initialState);
+  // const [filter, setFilter] = useState(initialState);
   return;
 };
