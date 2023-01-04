@@ -19,12 +19,6 @@ export const ContactItem = styled.li`
     box-shadow: 1px 1px 1px 1px;
     transition: background 1.3s ease;
     color: white;
-    /* button {
-      background: #d50a0af0;
-      border: 1px solid gray;
-      color: white;
-      transition: background 1s ease;
-    } */
   }
 `;
 

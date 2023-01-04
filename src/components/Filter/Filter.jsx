@@ -1,11 +1,14 @@
+import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import { WrapFilter, Input } from '../App.styled.js';
 
 const Filter = ({ onChange, value }) => {
+  const inputId = nanoid();
   return (
     <WrapFilter>
       <p>Find contacts by name</p>
       <Input
+        id={inputId}
         type="text"
         name="filter"
         value={value}

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { Contact } from './Contact/Contact';
 import { List, ContactItem } from './ContactList.styled';
 const ContactList = ({ contacts, onDeleteContact }) => {
+  console.log(contacts);
   return (
     <List>
       {contacts.map(({ id, name, number }) => (

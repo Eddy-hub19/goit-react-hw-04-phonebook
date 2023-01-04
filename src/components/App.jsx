@@ -1,95 +1,59 @@
-import { Container, Title, SubTitle } from './App.styled';
-import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
-import Filter from './Filter/Filter';
-import ContactForm from './ContactForm/ContactForm';
+import { Container, SubTitle, Title } from './App.styled';
+// import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
+import Filter from './Filter/Filter';
+import { nanoid } from 'nanoid';
+import { useState } from 'react';
+import { ContactForm } from './ContactForm/ContactForm';
+import { useEffect } from 'react';
 
-export class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
+export const App = () => {
+  const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem('contacts')) || []
+  );
+
+  const [filter, setFilter] = useState('');
+
+  useEffect(() => {
+    window.localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
+  const formSubmit = (name, number) => {
+    contacts.some(contact => contact.name === name)
+      ? alert(`${name} is already in contacts`)
+      : setContacts([
+          ...contacts,
+          {
+            id: nanoid(),
+            name,
+            number,
+          },
+        ]);
   };
 
-  componentDidMount() {
-    console.log('App componentDidMount');
-
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-
-    if (parsedContacts) {
-      this.setState({
-        contacts: parsedContacts,
-      });
-    }
-  }
-
-  componentDidUpdate(_, prevState) {
-    const { contacts } = this.state;
-
-    if (contacts !== prevState.contacts) {
-      console.log('Обновилось поле contacts');
-      localStorage.setItem('contacts', JSON.stringify(contacts));
-    }
-  }
-
-  addContact = ({ name, number }) => {
-    const { contacts } = this.state;
-    const Contact = {
-      id: nanoid(),
-      name,
-      number,
-    };
-
-    const contactNameLowerCase = Contact.name.toLowerCase();
-
-    if (
-      contacts.some(
-        contact => contact.name.toLowerCase() === contactNameLowerCase
-      )
-    ) {
-      return alert(`${Contact.name} is already in contacts.`);
-    }
-
-    this.setState(prevState => ({
-      contacts: [Contact, ...prevState.contacts],
-    }));
+  const handleChange = evt => {
+    setFilter(evt.target.value);
   };
 
-  deleteContacts = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
+  const deleteContacts = id => {
+    setContacts(contacts.filter(contact => contact.id !== id));
   };
 
-  changeFilter = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  };
-
-  getVisibleContacts = () => {
-    const { contacts, filter } = this.state;
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
-  render() {
-    const { filter } = this.state;
-    const visibleContacts = this.getVisibleContacts();
-
-    return (
-      <Container>
-        <Title>Phonebook</Title>
-        <ContactForm onSubmit={this.addContact} />
-        <SubTitle>Contacts</SubTitle>
-        <Filter value={filter} onChange={this.changeFilter} />
-        <ContactList
-          contacts={visibleContacts}
-          onDeleteContact={this.deleteContacts}
-        />
-      </Container>
-    );
-  }
-}
+  const filteredContacts = [];
+  contacts.forEach(contact => {
+    contact.name.toLowerCase().includes(filter.toLowerCase()) &&
+      filteredContacts.push(contact);
+  });
+  return (
+    <Container>
+      <Title>Phonebook</Title>
+      <ContactForm onSubmit={formSubmit} />
+      <SubTitle>Contacts</SubTitle>
+      <Filter value={filter} onChange={handleChange} />
+      {contacts.length === 0 && <div>There is not any contacts</div>}
+      <ContactList
+        contacts={filteredContacts}
+        onDeleteContact={deleteContacts}
+      />
+    </Container>
+  );
+};
